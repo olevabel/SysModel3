@@ -34,7 +34,9 @@ public class Controller {
             Node src = flow.getSrc();
             Node tgt = flow.getTgt();
             if(!storageMap.containsKey(src)) {
-                if (src.isKindOfCompund(src))
+                if (src.isKindOf(Compound.class)) {
+
+                }
             }
         }
 

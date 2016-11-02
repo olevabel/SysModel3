@@ -12,16 +12,8 @@ public class Node
 	
 	private BPMN bpmn;
 	
-	public boolean isKindOf(Class<Node> nodeType ) {
-		if(this instanceof nodeType) {
-			return true;
-		}
-
-	}
-	
-	public boolean isKindOf( Gateway gateway )
-	{
-		return false;
+	public boolean isKindOf(Class<?> nodeType) {
+		return nodeType.isInstance(this);
 	}
 	
 	public BPMN getBPMN( )
