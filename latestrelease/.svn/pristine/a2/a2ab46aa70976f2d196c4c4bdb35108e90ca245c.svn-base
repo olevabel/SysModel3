@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+  <package author="Raffaele Conforti" auto="false" desc="NoiseFiltering" hasPlugins="true" license="LGPL" logo="http://www.promtools.org/prom6/packages/prom_subtitle_hat_300.png" name="NoiseFiltering" org="Queensland University of Technology" os="all" url="http://www.promtools.org/prom6/packages/NoiseFiltering/NoiseFiltering-6.5.18-all.zip" version="6.5.18">
+    <dependency name="BasicUtils" />
+    <dependency name="Log" />
+    <dependency name="LogAbstractions" />
+    <dependency name="PetriNets" />
+    <dependency name="PNetReplayer" />
+    <dependency name="Widgets" />
+    <dependency name="ILPMiner" />
+    <dependency name="ETConformance" />
+    <dependency name="AlphaMiner" />
+    <dependency name="HeuristicsMiner" />
+    <dependency name="InductiveMiner" />
+    <dependency name="EfficientStorage" />
+    <dependency name="LpSolve" />
+    <dependency name="ProcessTree" />
+    <dependency name="Properties" />
+    <dependency name="BPMNMiner" />
+    <dependency name="CNet" />
+  </package>
+</packages>

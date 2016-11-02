@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="EvolutionaryTreeMiner-lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/packagelib/EvolutionaryTreeMiner-lib/RTED_v1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/EvolutionaryTreeMiner-lib/approxlib_v1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

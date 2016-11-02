@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src-test" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/src/au/edu/qut/noisefiltering/infrequentbehaviour/statistics" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="stdlib" level="project" />
+    <orderEntry type="library" name="packagelib" level="project" />
+    <orderEntry type="library" name="Log-lib" level="project" />
+    <orderEntry type="library" name="BasicUtils-lib" level="project" />
+    <orderEntry type="library" name="ILPMiner-lib" level="project" />
+    <orderEntry type="library" name="PetriNets-lib" level="project" />
+    <orderEntry type="library" name="Widgets-lib" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="Gurobi" level="project" />
+    <orderEntry type="library" name="gurobi" level="application" />
+    <orderEntry type="library" name="BPMNMiner" level="project" />
+    <orderEntry type="library" name="BPMN" level="project" />
+    <orderEntry type="library" name="lpsolve55j" level="project" />
+    <orderEntry type="library" name="BPMNMiner-lib" level="project" />
+    <orderEntry type="library" name="InductiveMiner-lib" level="project" />
+    <orderEntry type="library" name="ProcessTree-lib" level="project" />
+    <orderEntry type="library" name="ProM5-lib" level="project" />
+    <orderEntry type="library" name="ProcessTree" level="project" />
+    <orderEntry type="library" name="ProM5" level="project" />
+    <orderEntry type="library" name="Properties" level="project" />
+    <orderEntry type="library" name="Uma" level="project" />
+    <orderEntry type="library" name="Uma-lib" level="project" />
+    <orderEntry type="library" name="EvolutionaryTreeMiner-lib" level="project" />
+    <orderEntry type="library" name="j2ssh" level="project" />
+    <orderEntry type="library" name="lib (2)" level="project" />
+    <orderEntry type="library" name="EvolutionaryTreeMiner" level="project" />
+    <orderEntry type="library" name="PTConversions" level="project" />
+    <orderEntry type="library" name="ApacheUtils-lib" level="project" />
+    <orderEntry type="library" name="ApacheUtils" level="project" />
+    <orderEntry type="library" name="GraphViz-lib" level="project" />
+    <orderEntry type="library" name="GraphViz" level="project" />
+  </component>
+</module>

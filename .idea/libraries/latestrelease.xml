@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="latestrelease">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/latestrelease/NoiseFiltering.jar!/" />
+      <root url="jar://$PROJECT_DIR$/latestrelease/NoiseFiltering-6.5.18-all.zip!/" />
+      <root url="jar://$PROJECT_DIR$/latestrelease/NoiseFiltering-6.5.1-all.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

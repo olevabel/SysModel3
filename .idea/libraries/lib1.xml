@@ -1,0 +1,27 @@
+<component name="libraryTable">
+  <library name="lib1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/commons-math3-3.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jgoodies-common-1.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/de-jbpt-0.2.77.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/._StructuringService.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/Simplicity.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gurobi.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-0.24.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/EfficientStorage.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/uncommons-maths-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/StructuringService.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/Murata.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jgoodies-forms-1.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/fodina-2013-01-02.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/okde-java.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/._Simplicity.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/json-20090211.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bpstruct-0.1.117.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/com.springsource.com.sun.xml.bind-2.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bpmn-schema.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

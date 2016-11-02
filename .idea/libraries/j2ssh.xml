@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="j2ssh">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/packagelib/EvolutionaryTreeMiner-lib/j2ssh/j2ssh-core-0.2.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/EvolutionaryTreeMiner-lib/j2ssh/j2ssh-common-0.2.9.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

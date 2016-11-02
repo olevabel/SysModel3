@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Uma-lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/packagelib/Uma-lib/antlr-runtime-3.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Uma-lib/uma.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Uma-lib/pnapi-java.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

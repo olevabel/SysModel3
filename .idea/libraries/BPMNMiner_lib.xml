@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="BPMNMiner-lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/packagelib/BPMNMiner-lib/nikefsmonitor-20130503.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/BPMNMiner-lib/kxml2-2.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/BPMNMiner-lib/jgoodies-forms-1.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/BPMNMiner-lib/fodina-2013-01-02.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/BPMNMiner-lib/jgoodies-common-1.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

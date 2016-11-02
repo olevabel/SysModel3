@@ -1,0 +1,32 @@
+<component name="libraryTable">
+  <library name="packagelib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/packagelib/AlphaMiner.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/ProcessTree.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/ETConformance.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/ILPMiner.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/EvolutionaryTreeMiner.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/BasicUtils.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/HeuristicsMiner.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/BPMNMiner.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Log.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/ApacheUtils.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Uma.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/LogAbstractions.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Properties.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/PNetReplayer.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/InductiveMiner.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/PetriNets.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/EfficientStorage.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/ProM5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/PTConversions.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/GraphViz.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/BPMN.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/packagelib/BPMN.jar!/" />
+    </SOURCES>
+  </library>
+</component>

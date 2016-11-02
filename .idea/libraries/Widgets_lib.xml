@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="Widgets-lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets-lib/freehep-graphicsio-tests-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets-lib/freehep-graphics2d-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets-lib/freehep-graphicsio-emf-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets-lib/freehep-graphicsio-pdf-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets-lib/japura-1.12.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets-lib/freehep-graphicsio-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets-lib/freehep-graphicsio-swf-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets-lib/freehep-graphicsio-svg-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets-lib/freehep-graphicsio-ps-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets-lib/freehep-graphicsio-java-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets-lib/freehep-io-2.2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/Widgets-lib/freehep-graphicsbase-2.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

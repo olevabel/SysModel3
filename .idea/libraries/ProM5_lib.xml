@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="ProM5-lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/packagelib/ProM5-lib/ProMmodels.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/ProM5-lib/ProM.jar!/" />
+      <root url="jar://$PROJECT_DIR$/packagelib/ProM5-lib/ProMplugins.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

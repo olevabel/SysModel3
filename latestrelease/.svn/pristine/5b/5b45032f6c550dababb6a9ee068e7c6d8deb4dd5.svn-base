@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+  <package author="Raffaele Conforti" auto="false" desc="NoiseFiltering" hasPlugins="true" license="LGPL" logo="http://www.promtools.org/prom6/packages/prom_subtitle_hat_300.png" name="NoiseFiltering" org="Queensland University of Technology" os="all" url="http://www.promtools.org/prom6/packages/NoiseFiltering/NoiseFiltering-6.5.1-all.zip" version="6.5.1">
+    <dependency name="BasicUtils" />
+    <dependency name="Log" />
+    <dependency name="PNetReplayer" />
+    <dependency name="Widgets" />
+  </package>
+</packages>

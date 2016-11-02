@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="metrics-1.1">
+    <output-path>$PROJECT_DIR$/out/artifacts/metrics_1_1</output-path>
+    <root id="archive" name="metrics-1.1.jar">
+      <element id="directory" name="au">
+        <element id="directory" name="edu">
+          <element id="directory" name="qut">
+            <element id="directory" name="metrics">
+              <element id="dir-copy" path="$PROJECT_DIR$/out/production/ProM/au/edu/qut/metrics" />
+            </element>
+          </element>
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
