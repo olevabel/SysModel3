@@ -15,12 +15,21 @@ public class Node
 	public boolean isKindOf(Class<?> nodeType) {
 		return nodeType.isInstance(this);
 	}
-	
-	public BPMN getBPMN( )
-	{
-		return null;
+
+
+	public SequenceFlow getSrc() {
+		return src;
 	}
 
+	public SequenceFlow getTgt() {
+		return tgt;
+	}
 
+	public String getName() {
+		return name;
+	}
 
+	public BPMN getBpmn() {
+		return bpmn;
+	}
 }
