@@ -13,13 +13,19 @@ public class SequenceFlow
 	
 	public Node getSrc( )
 	{
-		return null;
+		return src;
 	}
 	
 	public Node getTgt( )
 	{
-		return null;
+		return tgt;
 	}
-	
-	
+
+	public void setSrc(Node src) {
+		this.src = src;
+	}
+
+	public void setTgt(Node tgt) {
+		this.tgt = tgt;
+	}
 }

@@ -8,6 +8,8 @@ package ut.systems.modelling.data;
 
 public class Compound extends Node {
 	private BPMN child;
-	
-	
+
+	public Compound(BPMN child) {
+		this.child = child;
+	}
 }

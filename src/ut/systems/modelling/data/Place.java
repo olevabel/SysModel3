@@ -19,4 +19,24 @@ public class Place
 	public Place(String label) {
 		this.label = label;
 	}
+
+	public Transition getP2t() {
+		return p2t;
+	}
+
+	public Transition getT2p() {
+		return t2p;
+	}
+
+	public PetriNet getPetriNet() {
+		return petriNet;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public int getType() {
+		return type;
+	}
 }
