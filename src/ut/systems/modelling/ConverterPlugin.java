@@ -4,14 +4,13 @@ import org.processmining.contexts.uitopia.UIPluginContext;
 import org.processmining.contexts.uitopia.annotations.UITopiaVariant;
 import org.processmining.framework.plugin.annotations.Plugin;
 import org.processmining.framework.plugin.annotations.PluginVariant;
-
 import org.processmining.models.graphbased.directed.bpmn.BPMNDiagram;
 import org.processmining.models.graphbased.directed.bpmn.elements.*;
+import org.processmining.models.graphbased.directed.bpmn.elements.Event;
+import org.processmining.models.graphbased.directed.bpmn.elements.Gateway;
 import org.processmining.models.graphbased.directed.petrinet.Petrinet;
-import ut.systems.modelling.data.BPMN;
-import ut.systems.modelling.data.Compound;
-import ut.systems.modelling.data.SequenceFlow;
-import ut.systems.modelling.data.Simple;
+import org.processmining.models.graphbased.directed.petrinet.impl.PetrinetImpl;
+import ut.systems.modelling.data.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,11 +33,11 @@ public class ConverterPlugin {
     )
     @PluginVariant(variantLabel = "Convert BPMN into PN", requiredParameterLabels = {0})
     public static Petrinet optimizeDiagram(UIPluginContext context, BPMNDiagram diagram) {
-        Petrinet pn = null;
-        BPMN myBPMNModel = getMyBPMNModel(diagram);
-//        pn = MyConverter.getPN(myBPMNModel);
 
-        return pn;
+        Controller controller = new Controller();
+        BPMN myBPMNModel = getMyBPMNModel(diagram);
+        PetriNet myPetriNet = controller.convertToPetri(myBPMNModel);
+        return myPetriNetToPetrinet(myPetriNet);
     }
 
     public static BPMN getMyBPMNModel(BPMNDiagram diagram) {
@@ -56,7 +55,9 @@ public class ConverterPlugin {
                 if (event.getEventType().equals(Event.EventType.INTERMEDIATE)) {
                     sequenceFlow.setSrc(new ut.systems.modelling.data.Event(ut.systems.modelling.data.Event.EventType.INTERMEDIATE));
                 } else if (event.getEventType().equals(Event.EventType.START)) {
-                    bpmn.setStartEvent(new ut.systems.modelling.data.Event(ut.systems.modelling.data.Event.EventType.START));
+                    ut.systems.modelling.data.Event startEvent = new ut.systems.modelling.data.Event(ut.systems.modelling.data.Event.EventType.START);
+                    bpmn.setStartEvent(startEvent);
+                    sequenceFlow.setSrc(startEvent);
                 }
             }
             if (flow.getTarget() instanceof Event) {
@@ -64,7 +65,9 @@ public class ConverterPlugin {
                 if (event.getEventType().equals(Event.EventType.INTERMEDIATE)) {
                     sequenceFlow.setTgt(new ut.systems.modelling.data.Event(ut.systems.modelling.data.Event.EventType.INTERMEDIATE));
                 } else if (event.getEventType().equals(Event.EventType.END)) {
-                    bpmn.setEndEvent(new ut.systems.modelling.data.Event(ut.systems.modelling.data.Event.EventType.END));
+                    ut.systems.modelling.data.Event endEvent = new ut.systems.modelling.data.Event(ut.systems.modelling.data.Event.EventType.END);
+                    bpmn.setEndEvent(endEvent);
+                    sequenceFlow.setTgt(endEvent);
                 }
             }
             if (flow.getSource() instanceof Gateway) {
@@ -110,4 +113,28 @@ public class ConverterPlugin {
         bpmn.setFlows(sequenceFlows);
         return bpmn;
     }
+    public static Petrinet myPetriNetToPetrinet (PetriNet myPetriNet) {
+        PetrinetImpl pn = new PetrinetImpl("Result PN");
+        for(Transition transition : myPetriNet.getTransitions()) {
+            if(transition.getIncomingPlaces().isEmpty()) {
+                pn.addPlace(Controller.START_PLACE);
+            } else if (transition.getOutgoingPlaces().isEmpty()) {
+                pn.addPlace(Controller.END_PLACE);
+            } else {
+                for(Place place : transition.getIncomingPlaces()) {
+                    org.processmining.models.graphbased.directed.petrinet.elements.Place place1 = pn.addPlace(place.getLabel());
+                    org.processmining.models.graphbased.directed.petrinet.elements.Transition transition1 = pn.addTransition(transition.getName());
+                    pn.addArc(place1, transition1);
+                }
+                for (Place place : transition.getOutgoingPlaces()) {
+                    org.processmining.models.graphbased.directed.petrinet.elements.Place place1 = pn.addPlace(place.getLabel());
+                    org.processmining.models.graphbased.directed.petrinet.elements.Transition transition1 = pn.addTransition(transition.getName());
+                    pn.addArc(transition1,place1);
+                }
+            }
+        }
+        return pn;
+    }
+
+
 }

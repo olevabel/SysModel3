@@ -24,6 +24,10 @@ public class Transition {
         this.t2p = new ArrayList<>();
     }
 
+    public String getName() {
+        return name;
+    }
+
     public ArrayList<Place> getIncomingPlaces() {
         return p2t;
     }

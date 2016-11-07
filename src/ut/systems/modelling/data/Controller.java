@@ -1,17 +1,14 @@
 package ut.systems.modelling.data;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @(#) Controller.java
  */
 
 public class Controller {
-    private static final String START_PLACE = "start";
-    private static final String END_PLACE = "end";
+    public static final String START_PLACE = "start";
+    public static final String END_PLACE = "end";
     private Boundary boundary;
 
     private PetriNet petriNet;
@@ -26,20 +23,20 @@ public class Controller {
 
     private BPMN bpmn;
 
-    public Controller(Boundary boundary, PetriNet petriNet, HashMap<Node, Transition> storageMap, Set<Transition> xorSplit, Set<Transition> xorJoin, HashMap<Transition, BPMN> subprocesses, BPMN bpmn) {
-        this.boundary = boundary;
-        this.petriNet = petriNet;
-        this.storageMap = storageMap;
-        this.xorSplit = xorSplit;
-        this.xorJoin = xorJoin;
-        this.subprocesses = subprocesses;
-        this.bpmn = bpmn;
+    public Controller() {
+        this.boundary = new Boundary();
+        this.petriNet = new PetriNet();
+        this.storageMap = new HashMap<>();
+        this.xorSplit = new HashSet<>();
+        this.xorJoin = new HashSet<>();
+        this.subprocesses = new HashMap<>();
+        this.bpmn = new BPMN();
     }
 
     public PetriNet convertToPetri(BPMN inputBPMN) {
         PetriNet petriNet = init(inputBPMN);
 
-        ArrayList<SequenceFlow> flows = bpmn.getFlows();
+        ArrayList<SequenceFlow> flows = inputBPMN.getFlows();
 
         for (int i = 0; i < flows.size(); i++) {
             Place place = petriNet.addPlace("");
