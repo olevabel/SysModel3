@@ -3,7 +3,5 @@
  */
 package ut.systems.modelling.data;
 
-public class Simple extends Task
-{
-	
+public class Simple extends Task {
 }

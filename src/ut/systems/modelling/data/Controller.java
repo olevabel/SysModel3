@@ -33,7 +33,7 @@ public class Controller {
         this.bpmn = new BPMN();
     }
 
-    public PetriNet convertToPetri(BPMN inputBPMN) {
+    public PetriNet convertToPetri(BPMN inputBPMN, boolean isInSubProcess) {
         PetriNet petriNet = init(inputBPMN);
 
         ArrayList<SequenceFlow> flows = inputBPMN.getFlows();
@@ -49,33 +49,33 @@ public class Controller {
             addTransition(petriNet, tgt);
             Transition tgtTransition = storageMap.get(tgt);
             petriNet.addArcP2T(place, tgtTransition);
-            Iterator xorSplitIterator = xorSplit.iterator();
-            while (xorSplitIterator.hasNext()) {
-                Transition nextSplit = (Transition) xorSplitIterator.next();
-                Transition invisibleTransition = petriNet.addTransition("");
-                petriNet.addArcP2T(nextSplit.getIncomingPlaces().get(0), invisibleTransition);
-                petriNet.addArcT2P(invisibleTransition, nextSplit.getOutgoingPlaces().get(0));
-                petriNet.removeArcT2P(nextSplit, nextSplit.getOutgoingPlaces().get(0));
-            }
-            Iterator xorJoinIterator = xorJoin.iterator();
-            while (xorJoinIterator.hasNext()) {
-                Transition nextJoin = (Transition) xorJoinIterator.next();
-                Transition invisibleTransition = petriNet.addTransition("");
-                petriNet.addArcP2T(nextJoin.getIncomingPlaces().get(0), invisibleTransition);
-                petriNet.addArcT2P(invisibleTransition, nextJoin.getOutgoingPlaces().get(0));
-                petriNet.removeArcP2T(nextJoin.getOutgoingPlaces().get(0), nextJoin);
-            }
-
+        }
+        Iterator xorSplitIterator = xorSplit.iterator();
+        while (xorSplitIterator.hasNext()) {
+            Transition nextSplit = (Transition) xorSplitIterator.next();
+            Transition invisibleTransition = petriNet.addTransition("");
+            petriNet.addArcP2T(nextSplit.getIncomingPlaces().get(0), invisibleTransition);
+            petriNet.addArcT2P(invisibleTransition, nextSplit.getOutgoingPlaces().get(0));
+            petriNet.removeArcT2P(nextSplit, nextSplit.getOutgoingPlaces().get(0));
+        }
+        Iterator xorJoinIterator = xorJoin.iterator();
+        while (xorJoinIterator.hasNext()) {
+            Transition nextJoin = (Transition) xorJoinIterator.next();
+            Transition invisibleTransition = petriNet.addTransition("");
+            petriNet.addArcP2T(nextJoin.getIncomingPlaces().get(0), invisibleTransition);
+            petriNet.addArcT2P(invisibleTransition, nextJoin.getOutgoingPlaces().get(0));
+            petriNet.removeArcP2T(nextJoin.getOutgoingPlaces().get(0), nextJoin);
+        }
+        if (!isInSubProcess) {
             for (Transition transition : subprocesses.keySet()) {
                 BPMN subprocessBPMN = subprocesses.get(transition);
-                PetriNet subPetriNet = convertToPetri(subprocessBPMN);
+                PetriNet subPetriNet = convertToPetri(subprocessBPMN, true);
                 Place inPlace = transition.getIncomingPlaces().get(0);
                 Place outPlace = transition.getOutgoingPlaces().get(0);
                 petriNet.removeTransition(transition);
                 attachPetriNets(inPlace, outPlace, subPetriNet, petriNet);
             }
         }
-
         return petriNet;
     }
 
@@ -83,8 +83,9 @@ public class Controller {
         if (!storageMap.containsKey(node)) {
             Transition transition;
             if (node.isKindOf(Compound.class)) {
-                transition = petriNet.addTransition(node.getName());
-                subprocesses.put(transition, node.getBpmn());
+                Compound compound = (Compound) node;
+                transition = petriNet.addTransition(compound.getName());
+                subprocesses.put(transition, compound.getChild());
             } else if (node.isKindOf(Gateway.class)) {
                 transition = petriNet.addTransition("");
                 Gateway gateway = (Gateway) node;
@@ -134,7 +135,7 @@ public class Controller {
                 }
             }
             for (Place place : transition.getOutgoingPlaces()) {
-                if(place.getLabel().equals(END_PLACE)) {
+                if (place.getLabel().equals(END_PLACE)) {
                     subPetriNet.removeArcT2P(transition, place);
                     place = outPlace;
                     outputPN.addArcT2P(transition, place);

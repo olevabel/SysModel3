@@ -9,7 +9,8 @@ public class Gateway extends Node {
     public enum Type {
         XORSPLIT,
         XORJOIN,
-        AND
+        ANDJOIN,
+        ANDSPLIT
     }
     private Type type;
 

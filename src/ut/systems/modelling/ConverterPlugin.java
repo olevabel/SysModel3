@@ -5,6 +5,7 @@ import org.processmining.contexts.uitopia.annotations.UITopiaVariant;
 import org.processmining.framework.plugin.annotations.Plugin;
 import org.processmining.framework.plugin.annotations.PluginVariant;
 import org.processmining.models.graphbased.directed.bpmn.BPMNDiagram;
+import org.processmining.models.graphbased.directed.bpmn.BPMNNode;
 import org.processmining.models.graphbased.directed.bpmn.elements.*;
 import org.processmining.models.graphbased.directed.bpmn.elements.Event;
 import org.processmining.models.graphbased.directed.bpmn.elements.Gateway;
@@ -14,6 +15,7 @@ import ut.systems.modelling.data.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 
 @Plugin(
@@ -26,6 +28,8 @@ import java.util.Collection;
 )
 public class ConverterPlugin {
 
+    private static HashMap<BPMNNode, Node> helperMap;
+
     @UITopiaVariant(
             affiliation = "University of Tartu",
             author = "Name Surname",
@@ -33,10 +37,10 @@ public class ConverterPlugin {
     )
     @PluginVariant(variantLabel = "Convert BPMN into PN", requiredParameterLabels = {0})
     public static Petrinet optimizeDiagram(UIPluginContext context, BPMNDiagram diagram) {
-
+        helperMap = new HashMap<>();
         Controller controller = new Controller();
         BPMN myBPMNModel = getMyBPMNModel(diagram);
-        PetriNet myPetriNet = controller.convertToPetri(myBPMNModel);
+        PetriNet myPetriNet = controller.convertToPetri(myBPMNModel,false);
         return myPetriNetToPetrinet(myPetriNet);
     }
 
@@ -53,75 +57,169 @@ public class ConverterPlugin {
             if (flow.getSource() instanceof Event) {
                 Event event = (Event) flow.getSource();
                 if (event.getEventType().equals(Event.EventType.INTERMEDIATE)) {
-                    sequenceFlow.setSrc(new ut.systems.modelling.data.Event(ut.systems.modelling.data.Event.EventType.INTERMEDIATE));
+                    if (helperMap.containsKey(event)) {
+                        sequenceFlow.setSrc(helperMap.get(event));
+                    } else {
+                        ut.systems.modelling.data.Event myEvent = new ut.systems.modelling.data.Event(ut.systems.modelling.data.Event.EventType.INTERMEDIATE);
+                        helperMap.put(event, myEvent);
+                        sequenceFlow.setSrc(myEvent);
+                    }
                 } else if (event.getEventType().equals(Event.EventType.START)) {
                     ut.systems.modelling.data.Event startEvent = new ut.systems.modelling.data.Event(ut.systems.modelling.data.Event.EventType.START);
                     bpmn.setStartEvent(startEvent);
                     sequenceFlow.setSrc(startEvent);
                 }
             }
+            if (flow.getSource() instanceof SubProcess) {
+                SubProcess subProcess = (SubProcess) flow.getSource();
+                if (helperMap.containsKey(subProcess)) {
+                    sequenceFlow.setSrc(helperMap.get(subProcess));
+                } else {
+                    Compound compound = new Compound(convertToMyBPMN(diagram.getFlows(subProcess), diagram));
+                    helperMap.put(subProcess, compound);
+                    sequenceFlow.setSrc(compound);
+                }
+            }
+            if (flow.getSource() instanceof Gateway) {
+                Gateway gateway = (Gateway) flow.getSource();
+                if (gateway.getGatewayType().equals(Gateway.GatewayType.DATABASED)) {
+                    ut.systems.modelling.data.Gateway myGateway;
+                    if (gateway.getGraph().getOutEdges(gateway).size() > 1) {
+                        if (helperMap.containsKey(gateway)) {
+                            sequenceFlow.setSrc(helperMap.get(gateway));
+                        } else {
+                            myGateway = new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.XORSPLIT);
+                            helperMap.put(gateway, myGateway);
+                            sequenceFlow.setSrc(myGateway);
+                        }
+
+                    } else {
+                        if (helperMap.containsKey(gateway)) {
+                            sequenceFlow.setSrc(helperMap.get(gateway));
+                        } else {
+                            myGateway = new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.XORJOIN);
+                            helperMap.put(gateway, myGateway);
+                            sequenceFlow.setSrc(myGateway);
+                        }
+                    }
+                } else if (gateway.getGatewayType().equals(Gateway.GatewayType.PARALLEL)) {
+                    ut.systems.modelling.data.Gateway myGateway;
+                    if (gateway.getGraph().getOutEdges(gateway).size() > 1) {
+                        if (helperMap.containsKey(gateway)) {
+                            sequenceFlow.setSrc(helperMap.get(gateway));
+                        } else {
+                            myGateway = new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.ANDSPLIT);
+                            helperMap.put(gateway, myGateway);
+                            sequenceFlow.setSrc(myGateway);
+                        }
+
+                    } else {
+                        if (helperMap.containsKey(gateway)) {
+                            sequenceFlow.setSrc(helperMap.get(gateway));
+                        } else {
+                            myGateway = new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.ANDJOIN);
+                            helperMap.put(gateway, myGateway);
+                            sequenceFlow.setSrc(myGateway);
+                        }
+                    }
+                }
+
+            }
+            if (flow.getSource() instanceof Activity) {
+                Activity activity = (Activity) flow.getSource();
+                if (helperMap.containsKey(activity)) {
+                    sequenceFlow.setSrc(helperMap.get(activity));
+                } else {
+                    Simple simple = new Simple();
+                    helperMap.put(activity, simple);
+                    sequenceFlow.setSrc(simple);
+                }
+            }
             if (flow.getTarget() instanceof Event) {
                 Event event = (Event) flow.getTarget();
                 if (event.getEventType().equals(Event.EventType.INTERMEDIATE)) {
-                    sequenceFlow.setTgt(new ut.systems.modelling.data.Event(ut.systems.modelling.data.Event.EventType.INTERMEDIATE));
+                    if (!helperMap.containsKey(event)) {
+                        ut.systems.modelling.data.Event myEvent = new ut.systems.modelling.data.Event(ut.systems.modelling.data.Event.EventType.INTERMEDIATE);
+                        sequenceFlow.setTgt(myEvent);
+                        helperMap.put(event, myEvent);
+                    } else {
+                        sequenceFlow.setTgt(helperMap.get(event));
+                    }
                 } else if (event.getEventType().equals(Event.EventType.END)) {
                     ut.systems.modelling.data.Event endEvent = new ut.systems.modelling.data.Event(ut.systems.modelling.data.Event.EventType.END);
                     bpmn.setEndEvent(endEvent);
                     sequenceFlow.setTgt(endEvent);
                 }
             }
-            if (flow.getSource() instanceof Gateway) {
-                Gateway gateway = (Gateway) flow.getSource();
-                if (gateway.getGatewayType().equals(Gateway.GatewayType.DATABASED)) {
-                    if (gateway.getGraph().getOutEdges(gateway).size() > 1) {
-                        sequenceFlow.setSrc(new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.XORSPLIT));
-                    } else {
-                        sequenceFlow.setSrc(new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.XORJOIN));
-                    }
-                } else if (gateway.getGatewayType().equals(Gateway.GatewayType.PARALLEL)) {
-                    sequenceFlow.setSrc(new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.AND));
-                }
-            }
+
             if (flow.getTarget() instanceof Gateway) {
                 Gateway gateway = (Gateway) flow.getTarget();
                 if (gateway.getGatewayType().equals(Gateway.GatewayType.DATABASED)) {
-                    if (gateway.getGraph().getOutEdges(gateway).size() > 1) {
-                        sequenceFlow.setTgt(new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.XORSPLIT));
+                    if (helperMap.containsKey(gateway)) {
+                        sequenceFlow.setTgt(helperMap.get(gateway));
                     } else {
-                        sequenceFlow.setTgt(new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.XORJOIN));
+                        ut.systems.modelling.data.Gateway myGateway;
+                        if (gateway.getGraph().getOutEdges(gateway).size() > 1) {
+                            myGateway = new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.XORSPLIT);
+                        } else {
+                            myGateway = new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.XORJOIN);
+                        }
+                        sequenceFlow.setTgt(myGateway);
+                        helperMap.put(gateway, myGateway);
                     }
                 } else if (gateway.getGatewayType().equals(Gateway.GatewayType.PARALLEL)) {
-                    sequenceFlow.setTgt(new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.AND));
+                    if (helperMap.containsKey(gateway)) {
+                        sequenceFlow.setTgt(helperMap.get(gateway));
+                    } else {
+                        ut.systems.modelling.data.Gateway myGateway;
+                        if (gateway.getGraph().getOutEdges(gateway).size() > 1) {
+                            myGateway = new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.ANDSPLIT);
+                        } else {
+                            myGateway = new ut.systems.modelling.data.Gateway(ut.systems.modelling.data.Gateway.Type.ANDJOIN);
+                        }
+
+                        sequenceFlow.setTgt(myGateway);
+                        helperMap.put(gateway, myGateway);
+                    }
                 }
             }
-            if (flow.getSource() instanceof SubProcess) {
-                SubProcess subProcess = (SubProcess) flow.getSource();
-                sequenceFlow.setSrc(new Compound(convertToMyBPMN(diagram.getFlows(subProcess), diagram)));
-            }
+
             if (flow.getTarget() instanceof SubProcess) {
                 SubProcess subProcess = (SubProcess) flow.getTarget();
-                sequenceFlow.setTgt(new Compound(convertToMyBPMN(diagram.getFlows(subProcess), diagram)));
+                if (helperMap.containsKey(subProcess)) {
+                    sequenceFlow.setTgt(helperMap.get(subProcess));
+                } else {
+                    Compound compound = new Compound(convertToMyBPMN(diagram.getFlows(subProcess), diagram));
+                    sequenceFlow.setTgt(compound);
+                    helperMap.put(subProcess, compound);
+                }
             }
-            if (flow.getSource() instanceof Activity) {
-                sequenceFlow.setSrc(new Simple());
-            }
+
             if (flow.getTarget() instanceof Activity) {
-                sequenceFlow.setTgt(new Simple());
+                Activity activity = (Activity) flow.getTarget();
+                if (helperMap.containsKey(activity)) {
+                    sequenceFlow.setTgt(helperMap.get(activity));
+                } else {
+                    Simple simple = new Simple();
+                    sequenceFlow.setTgt(simple);
+                    helperMap.put(activity, simple);
+                }
             }
             sequenceFlows.add(sequenceFlow);
         }
         bpmn.setFlows(sequenceFlows);
         return bpmn;
     }
-    public static Petrinet myPetriNetToPetrinet (PetriNet myPetriNet) {
+
+    public static Petrinet myPetriNetToPetrinet(PetriNet myPetriNet) {
         PetrinetImpl pn = new PetrinetImpl("Result PN");
-        for(Transition transition : myPetriNet.getTransitions()) {
-            if(transition.getIncomingPlaces().isEmpty()) {
+        for (Transition transition : myPetriNet.getTransitions()) {
+            if (transition.getIncomingPlaces().isEmpty()) {
                 pn.addPlace(Controller.START_PLACE);
             } else if (transition.getOutgoingPlaces().isEmpty()) {
                 pn.addPlace(Controller.END_PLACE);
             } else {
-                for(Place place : transition.getIncomingPlaces()) {
+                for (Place place : transition.getIncomingPlaces()) {
                     org.processmining.models.graphbased.directed.petrinet.elements.Place place1 = pn.addPlace(place.getLabel());
                     org.processmining.models.graphbased.directed.petrinet.elements.Transition transition1 = pn.addTransition(transition.getName());
                     pn.addArc(place1, transition1);
@@ -129,7 +227,7 @@ public class ConverterPlugin {
                 for (Place place : transition.getOutgoingPlaces()) {
                     org.processmining.models.graphbased.directed.petrinet.elements.Place place1 = pn.addPlace(place.getLabel());
                     org.processmining.models.graphbased.directed.petrinet.elements.Transition transition1 = pn.addTransition(transition.getName());
-                    pn.addArc(transition1,place1);
+                    pn.addArc(transition1, place1);
                 }
             }
         }

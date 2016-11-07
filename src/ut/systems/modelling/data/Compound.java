@@ -12,4 +12,8 @@ public class Compound extends Node {
 	public Compound(BPMN child) {
 		this.child = child;
 	}
+
+	public BPMN getChild() {
+		return child;
+	}
 }
